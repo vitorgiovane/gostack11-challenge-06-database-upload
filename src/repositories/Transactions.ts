@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm'
 
 import Transaction from '../models/Transaction'
+import { getTransactionTypeTitle } from '../enums/transactionTypes'
 
 interface Balance {
   income: number
@@ -14,13 +15,15 @@ class Transactions extends Repository<Transaction> {
     const transactions = await this.find()
 
     const income = transactions.reduce((accumulator, current) => {
-      return current.type === 'income'
+      const currentType = getTransactionTypeTitle(current.type)
+      return currentType === 'income'
         ? accumulator + current.value
         : accumulator
     }, 0)
 
     const outcome = transactions.reduce((accumulator, current) => {
-      return current.type === 'outcome'
+      const currentType = getTransactionTypeTitle(current.type)
+      return currentType === 'outcome'
         ? accumulator + current.value
         : accumulator
     }, 0)

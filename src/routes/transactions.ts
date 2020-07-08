@@ -5,7 +5,7 @@ import TransactionsRepository from '../repositories/Transactions'
 import CreateTransactionService from '../services/CreateTransaction'
 import Category from '../models/Category'
 import listTransactions from '../responses/listTransactions'
-// import DeleteTransactionService from '../services/DeleteTransactionService';
+import DeleteTransactionService from '../services/DeleteTransaction'
 // import ImportTransactionsService from '../services/ImportTransactionsService';
 
 const transactionsRouter = Router()
@@ -33,7 +33,10 @@ transactionsRouter.post('/', async (request, response) => {
 })
 
 transactionsRouter.delete('/:id', async (request, response) => {
-  // TODO
+  const { id } = request.params
+  const deleteTransactionService = new DeleteTransactionService()
+  await deleteTransactionService.run(id)
+  return response.status(204).send()
 })
 
 transactionsRouter.post('/import', async (request, response) => {
