@@ -1,0 +1,15 @@
+.DS_Store
+/.config
+/.env
+/.env.example
+/.env.ready
+/.git
+/.gitignore
+/.history
+/.npm
+/.prettierrc
+/.vscode
+/docker
+/docker-compose.yml
+/LICENSE
+/README.md
