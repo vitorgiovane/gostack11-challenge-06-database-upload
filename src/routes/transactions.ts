@@ -16,7 +16,9 @@ transactionsRouter.get('/', async (request, response) => {
     relations: ['category']
   })
   const transformedTransactions = listTransactions(transactions)
-  return response.json(transformedTransactions)
+  const balance = await transactionsRepository.getBalance()
+
+  return response.json({ transactions: transformedTransactions, balance })
 })
 
 transactionsRouter.post('/', async (request, response) => {
