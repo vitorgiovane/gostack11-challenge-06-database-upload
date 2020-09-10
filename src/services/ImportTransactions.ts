@@ -47,12 +47,6 @@ class ImportTransactions {
       const createdTransaction = await this.createTransaction(transaction)
       createdTransactions.push(createdTransaction)
     }
-    // const creatingTransactions = this.transactions.map(async transaction => {
-    //   const createdTransaction = await this.createTransaction(transaction)
-    //   return createdTransaction
-    // })
-
-    // const createdTransactions = await Promise.all(creatingTransactions)
     return createdTransactions
   }
 
