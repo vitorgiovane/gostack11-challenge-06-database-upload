@@ -5,7 +5,7 @@ import AppError from '../errors/AppError'
 import Transaction from '../models/Transaction'
 
 class DeleteTransaction {
-  public async run(transactionId: uuid): Promise<void> {
+  public async run(transactionId: string): Promise<void> {
     if (!isUuid(transactionId)) throw new AppError('Invalid transaction ID')
 
     const transactionRepository = getRepository(Transaction)
@@ -15,7 +15,7 @@ class DeleteTransaction {
 
     if (!transaction) throw new AppError('Invalid transaction ID')
 
-    transactionRepository.remove([transaction])
+    await transactionRepository.remove([transaction])
   }
 }
 

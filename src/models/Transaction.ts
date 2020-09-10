@@ -17,8 +17,8 @@ class Transaction {
   @Column('varchar')
   title: string
 
-  @Column('int')
-  type: number
+  @Column('varchar')
+  type: 'income' | 'outcome'
 
   @Column('int')
   value: number

@@ -24,19 +24,30 @@ class CreateTransaction {
     const transactionsRepository = getCustomRepository(TransactionsRepository)
     const categoriesRepository = getRepository(Category)
 
-    const category = await categoriesRepository.findOne({
-      where: { title: categoryTitle.toLowerCase() }
+    let category = await categoriesRepository.findOne({
+      where: { title: categoryTitle }
     })
 
-    if (!category) throw new AppError('Invalid category title')
+    if (!category) {
+      category = categoriesRepository.create({
+        title: categoryTitle
+      })
+
+      await categoriesRepository.save(category)
+    }
 
     const transactionTypeCode = getTransactionTypeCode(type)
     if (!transactionTypeCode) throw new AppError('Invalid transaction type')
 
+    if (type === 'outcome') {
+      const balance = await transactionsRepository.getBalance()
+      if (balance.total < value) throw new AppError('Insufficient funds')
+    }
+
     const transaction = transactionsRepository.create({
       title,
       value,
-      type: transactionTypeCode,
+      type,
       category_id: category.id
     })
 
